@@ -177,7 +177,7 @@ class QuoteSearcher extends Component {
         </form>
 
         <h2 className="likes">
-          Quotes diked: {this.state.likes} | Quotes disliked:{" "}
+          Quotes liked: {this.state.likes} | Quotes disliked:{" "}
           {this.state.dislikes}
         </h2>
         {this.state.loading && "Loadin'..."}
