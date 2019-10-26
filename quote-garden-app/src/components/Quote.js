@@ -27,11 +27,11 @@ class Quote extends Component {
     });
 
     if (this.state.liked === null) {
-      this.props.addDisike();
+      this.props.addDislike();
     }
 
     if (this.state.liked === true) {
-      this.props.addDisike();
+      this.props.addDislike();
       this.props.removeLike();
     }
   };

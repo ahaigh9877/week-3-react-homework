@@ -13,16 +13,31 @@ class QuoteSearcher extends Component {
   componentDidMount() {
     fetch("https://quote-garden.herokuapp.com/quotes/search/tree")
       .then(res => res.json())
-      .then(data => this.setState({ quotes: data.results, loading: false }))
+      .then(data => data.results)
+      .then(quotes => this.getUniques(quotes))
+      .then(uniqueQuotes =>
+        this.setState({ quotes: uniqueQuotes, loading: false })
+      )
       .catch(console.error);
   }
+
+  getUniques = quotes => {
+    const uniqueQuotes = Array.from(
+      new Set(quotes.map(quote => quote.quoteText))
+    ).map(quoteText => quotes.find(q => q.quoteText === quoteText));
+    return uniqueQuotes;
+  };
 
   search() {
     fetch(
       `https://quote-garden.herokuapp.com/quotes/search/${this.state.searchTerm}`
     )
       .then(res => res.json())
-      .then(data => this.setState({ quotes: data.results, loading: false }))
+      .then(data => data.results)
+      .then(quotes => this.getUniques(quotes))
+      .then(uniqueQuotes =>
+        this.setState({ quotes: uniqueQuotes, loading: false })
+      )
       .catch(console.error);
   }
 
@@ -38,11 +53,19 @@ class QuoteSearcher extends Component {
     this.search();
   };
 
+  addOpinion(opinion) {
+    if (opinion === "like") {
+      this.setState({ likes: this.state.likes + 1 });
+    } else {
+      this.setState({ dislikes: this.state.dislikes + 1 });
+    }
+  }
+
   addLike = () => {
     this.setState({ likes: this.state.likes + 1 });
   };
 
-  addDisike = () => {
+  addDislike = () => {
     this.setState({ dislikes: this.state.dislikes + 1 });
   };
 
@@ -82,7 +105,8 @@ class QuoteSearcher extends Component {
               quoteText={quote.quoteText}
               key={quote._id}
               addLike={this.addLike}
-              addDisike={this.addDisike}
+              addDislike={this.addDislike}
+              addOpinion={this.addOpinion}
               removeLike={this.removeLike}
               removeDislike={this.removeDislike}
             />
