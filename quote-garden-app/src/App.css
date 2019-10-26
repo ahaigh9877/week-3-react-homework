@@ -1,0 +1,117 @@
+@import url("https://fonts.googleapis.com/css?family=Berkshire+Swash|Merriweather|Teko|Satisfy&display=swap");
+
+main {
+  background-color: palegoldenrod;
+  justify-items: center;
+  font-family: "Merriweather", serif;
+}
+
+a {
+  color: transparent;
+  text-shadow: none;
+}
+
+h1 {
+  display: block;
+  font-family: "Berkshire Swash", sans-serif;
+  font-size: 80px;
+  margin: 20px auto;
+  margin-left: 250px;
+  color: green;
+  text-decoration: none;
+}
+
+h2 {
+  margin-top: 0;
+  color: green;
+}
+
+.likes {
+  margin-left: 300px;
+}
+
+.searchField {
+  font-family: "Teko";
+  height: 30px;
+  width: 200px;
+  margin-left: 20px;
+  margin-right: 20px;
+  padding-left: 10px;
+  padding-bottom: 3px;
+  font-size: 20px;
+  color: darkgreen;
+
+  background-position: 10px 9px;
+  background-repeat: no-repeat;
+  background-size: 25px;
+  background-color: aliceblue;
+  border-radius: 30px;
+  border: none;
+  outline: none;
+}
+
+input {
+  font-family: "Teko";
+  height: 30px;
+  width: 200px;
+  margin-left: 20px;
+  margin-right: 20px;
+  padding-left: 10px;
+  padding-bottom: 3px;
+  font-size: 20px;
+  color: darkgreen;
+
+  background-position: 10px 9px;
+  background-repeat: no-repeat;
+  background-size: 25px;
+  background-color: aliceblue;
+  border-radius: 30px;
+  border: none;
+  outline: none;
+}
+
+button {
+  font-family: "Teko";
+
+  height: 30px;
+  font-size: 20px;
+  margin: 10px;
+  padding-left: 20px;
+  padding-right: 20px;
+  color: darkgreen;
+  background-color: aliceblue;
+  border-radius: 30px;
+  border: none;
+  outline: none;
+
+  transition: 0.3s;
+  cursor: pointer;
+}
+
+.quoteSubmitButton {
+  margin: 0 auto;
+}
+
+.quotes {
+  width: 70%;
+  margin: 30px auto;
+  padding: 15px 25px 25px 25px;
+  border: 3px solid grey;
+  border-radius: 20px;
+  background-color: wheat;
+}
+
+form {
+  width: 70%;
+  margin: 30px auto;
+  padding: 15px 25px 25px 25px;
+  border: 3px solid grey;
+  border-radius: 20px;
+  background-color: wheat;
+}
+
+.quoteText {
+  font-family: "Satisfy", serif;
+  font-size: 30px;
+  color: darkgreen;
+}

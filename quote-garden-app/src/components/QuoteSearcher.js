@@ -133,25 +133,52 @@ class QuoteSearcher extends Component {
 
   render() {
     return (
-      <div>
+      <main>
         <a href="." onClick={this.refreshPage}>
           <h1>QUOTINATOR</h1>
         </a>
         <form onSubmit={this.handleSubmitSearch}>
-          <label>Search:</label>
+          <h2>Search for quotes:</h2>
           <input
             type="text"
             className="searchField"
             value={this.state.searchTerm}
             onChange={this.handleSearch}
           />
-          <button type="submit" value="Submit">
+          <button className="searchButton" type="submit" value="Submit">
             Search
           </button>
         </form>
 
-        <h2>
-          Liked: {this.state.likes} / Disliked: {this.state.dislikes}
+        <form onSubmit={this.HandleSubmitQuote}>
+          <div className="inputWrapper">
+            <h2>Submit your own quote if you want!</h2>
+            <label>Quote from: </label>
+            <input
+              type="text"
+              className="inputFieldAuthor"
+              name="newAuthor"
+              placeholder="Who said it?"
+              onChange={this.handleChangeAuthor}
+            />
+            <label>Your Quote: </label>
+            <input
+              type="text"
+              className="inputFieldQuote"
+              name="newQuote"
+              placeholder="What did they say?"
+              onChange={this.handleChangeQuote}
+            ></input>
+          </div>
+
+          <button type="submit" value="Submit your quote">
+            Submit Quote
+          </button>
+        </form>
+
+        <h2 className="likes">
+          Quotes diked: {this.state.likes} | Quotes disliked:{" "}
+          {this.state.dislikes}
         </h2>
         {this.state.loading && "Loadin'..."}
         {this.state.emptySearch === false && (
@@ -178,31 +205,6 @@ class QuoteSearcher extends Component {
             , dude. Why don't you try thinking up your own?
           </h2>
         )}
-        <form onSubmit={this.HandleSubmitQuote}>
-          <label>Quote from: </label>
-          <input
-            type="text"
-            className="inputFieldAuthor"
-            name="newAuthor"
-            onChange={this.handleChangeAuthor}
-          />
-          <label>Your Quote: </label>
-          <input
-            type="text"
-            className="inputFieldQuote"
-            name="newQuote"
-            placeholder="what's yer quote?"
-            onChange={this.handleChangeQuote}
-          ></input>
-          <br></br>
-          <button
-            className="quoteSubmitButton"
-            type="submit"
-            value="Submit your quote"
-          >
-            Submit Quote
-          </button>
-        </form>
 
         {!this.state.loading &&
           this.state.quotes.map(quote => (
@@ -217,7 +219,7 @@ class QuoteSearcher extends Component {
               removeDislike={this.removeDislike}
             />
           ))}
-      </div>
+      </main>
     );
   }
 }

@@ -7,7 +7,7 @@ class Quote extends Component {
   handleLike = () => {
     this.setState({
       liked: true,
-      quoteStyle: { color: "green", fontWeight: "bold" }
+      quoteStyle: { color: "blue", fontWeight: "bold" }
     });
     // If it's neutral, add a like to the counter
     if (this.state.liked === null) {
@@ -51,8 +51,7 @@ class Quote extends Component {
 
   render() {
     return (
-      <div>
-        {/* In this case there's only one set of braces, because the second set are in the state */}
+      <div className="quotes">
         <p style={this.state.quoteStyle} className="quoteText">
           {this.props.quoteText}
         </p>
@@ -62,7 +61,6 @@ class Quote extends Component {
         <button onClick={this.handleLike}>LIKE</button>
         <button onClick={this.handleDislike}>DISLIKE</button>
         <button onClick={this.handleReset}>RESET</button>
-        <p>~</p>
       </div>
     );
   }
