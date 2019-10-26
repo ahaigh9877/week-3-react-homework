@@ -7,7 +7,9 @@ class QuoteSearcher extends Component {
     likes: 0,
     dislikes: 0,
     searchTerm: "",
-    loading: true
+    previousSearches: [],
+    loading: true,
+    emptySearch: false
   };
 
   componentDidMount() {
@@ -28,6 +30,17 @@ class QuoteSearcher extends Component {
     return uniqueQuotes;
   };
 
+  checkEmpty = quoteArr => {
+    console.log("checking empty");
+    console.log(quoteArr);
+    quoteArr.length < 1
+      ? this.setState({ emptySearch: true })
+      : this.setState({ emptySearch: false });
+    console.log("state: ", this.state);
+    return quoteArr;
+  };
+  // return quoteArr;
+
   search() {
     fetch(
       `https://quote-garden.herokuapp.com/quotes/search/${this.state.searchTerm}`
@@ -35,6 +48,7 @@ class QuoteSearcher extends Component {
       .then(res => res.json())
       .then(data => data.results)
       .then(quotes => this.getUniques(quotes))
+      .then(quoteArray => this.checkEmpty(quoteArray))
       .then(uniqueQuotes =>
         this.setState({ quotes: uniqueQuotes, loading: false })
       )
@@ -43,12 +57,15 @@ class QuoteSearcher extends Component {
 
   handleSearch = event => {
     this.setState({ searchTerm: event.target.value });
-    console.log("state: ", this.state);
   };
 
   handleSubmit = event => {
     event.preventDefault();
-    console.log("submitted: ", this.state.searchTerm);
+    this.setState({
+      previousSearches: this.state.previousSearches.concat(
+        this.state.searchTerm
+      )
+    });
     this.setState({ searchTerm: "", loading: true });
     this.search();
   };
@@ -98,6 +115,17 @@ class QuoteSearcher extends Component {
           Liked: {this.state.likes} / Disliked: {this.state.dislikes}
         </h2>
         {this.state.loading && "Loadin'..."}
+        {this.state.emptySearch && (
+          <h3>
+            {`Ain't no quotes about`}
+            <em>{` ${
+              this.state.previousSearches[
+                this.state.previousSearches.length - 1
+              ]
+            }`}</em>
+            {`, dude. Why don't you try thinking up your own?`}
+          </h3>
+        )}
         {!this.state.loading &&
           this.state.quotes.map(quote => (
             <Quote
