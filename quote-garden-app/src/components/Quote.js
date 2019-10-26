@@ -50,7 +50,6 @@ class Quote extends Component {
   };
 
   render() {
-    console.log(this.props);
     return (
       <div>
         {/* In this case there's only one set of braces, because the second set are in the state */}
