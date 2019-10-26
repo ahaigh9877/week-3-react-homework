@@ -9,7 +9,11 @@ class QuoteSearcher extends Component {
     searchTerm: "",
     previousSearches: [],
     loading: true,
-    emptySearch: false
+    emptySearch: null,
+    newQuote: "",
+    newAuthor: "",
+    newQuoteObj: { quoteAuthor: "", quoteText: "" },
+    testArr: []
   };
 
   componentDidMount() {
@@ -39,7 +43,6 @@ class QuoteSearcher extends Component {
     console.log("state: ", this.state);
     return quoteArr;
   };
-  // return quoteArr;
 
   search() {
     fetch(
@@ -59,8 +62,9 @@ class QuoteSearcher extends Component {
     this.setState({ searchTerm: event.target.value });
   };
 
-  handleSubmit = event => {
+  handleSubmitSearch = event => {
     event.preventDefault();
+
     this.setState({
       previousSearches: this.state.previousSearches.concat(
         this.state.searchTerm
@@ -68,6 +72,35 @@ class QuoteSearcher extends Component {
     });
     this.setState({ searchTerm: "", loading: true });
     this.search();
+  };
+
+  handleChangeAuthor = event => {
+    const newAuthor = event.target.value;
+    this.setState(prevState => ({
+      newQuoteObj: {
+        ...prevState.newQuoteObj,
+        _id: Math.round(Math.random() * 100000),
+        quoteAuthor: newAuthor
+      }
+    }));
+  };
+
+  handleChangeQuote = event => {
+    const newQuote = event.target.value;
+    this.setState(prevState => ({
+      newQuoteObj: { ...prevState.newQuoteObj, quoteText: newQuote }
+    }));
+  };
+
+  HandleSubmitQuote = event => {
+    event.preventDefault();
+    console.log("hello handle submit quote", this.state.newQuoteObj);
+    const quoteToAdd = this.state.newQuoteObj;
+    this.setState({ newQuoteObj: {} });
+    this.setState({
+      quotes: this.state.quotes.concat(quoteToAdd)
+    });
+    console.log("state after submit: ", this.state);
   };
 
   addOpinion(opinion) {
@@ -94,11 +127,17 @@ class QuoteSearcher extends Component {
     this.setState({ dislikes: this.state.dislikes - 1 });
   };
 
+  refreshPage() {
+    window.location.reload(false);
+  }
+
   render() {
     return (
       <div>
-        <h1>Some Quotes</h1>
-        <form onSubmit={this.handleSubmit}>
+        <a href="." onClick={this.refreshPage}>
+          <h1>QUOTINATOR</h1>
+        </a>
+        <form onSubmit={this.handleSubmitSearch}>
           <label>Search:</label>
           <input
             type="text"
@@ -110,22 +149,61 @@ class QuoteSearcher extends Component {
             Search
           </button>
         </form>
-        {/* {!this.state.load && `Searched for: ${this.state.searchTerm}`} */}
+
         <h2>
           Liked: {this.state.likes} / Disliked: {this.state.dislikes}
         </h2>
         {this.state.loading && "Loadin'..."}
-        {this.state.emptySearch && (
-          <h3>
-            {`Ain't no quotes about`}
-            <em>{` ${
+        {this.state.emptySearch === false && (
+          <h2>
+            You just searched for "
+            {
               this.state.previousSearches[
                 this.state.previousSearches.length - 1
               ]
-            }`}</em>
-            {`, dude. Why don't you try thinking up your own?`}
-          </h3>
+            }
+            ", didn't you, you little scamp? Alright, here's some wisdom for ya.
+          </h2>
         )}
+        {this.state.emptySearch && (
+          <h2>
+            Ain't no quotes about{" "}
+            <em>
+              {
+                this.state.previousSearches[
+                  this.state.previousSearches.length - 1
+                ]
+              }
+            </em>
+            , dude. Why don't you try thinking up your own?
+          </h2>
+        )}
+        <form onSubmit={this.HandleSubmitQuote}>
+          <label>Quote from: </label>
+          <input
+            type="text"
+            className="inputFieldAuthor"
+            name="newAuthor"
+            onChange={this.handleChangeAuthor}
+          />
+          <label>Your Quote: </label>
+          <input
+            type="text"
+            className="inputFieldQuote"
+            name="newQuote"
+            placeholder="what's yer quote?"
+            onChange={this.handleChangeQuote}
+          ></input>
+          <br></br>
+          <button
+            className="quoteSubmitButton"
+            type="submit"
+            value="Submit your quote"
+          >
+            Submit Quote
+          </button>
+        </form>
+
         {!this.state.loading &&
           this.state.quotes.map(quote => (
             <Quote
