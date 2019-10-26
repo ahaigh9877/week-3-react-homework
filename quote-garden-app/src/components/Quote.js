@@ -3,7 +3,6 @@ import React, { Component } from "react";
 class Quote extends Component {
   state = { liked: null, quoteStyle: null };
 
-  // See if I can merge the functions below later...
   handleLike = () => {
     this.setState({
       liked: true,

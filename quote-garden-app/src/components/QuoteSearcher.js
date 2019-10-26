@@ -94,22 +94,12 @@ class QuoteSearcher extends Component {
 
   HandleSubmitQuote = event => {
     event.preventDefault();
-    console.log("hello handle submit quote", this.state.newQuoteObj);
     const quoteToAdd = this.state.newQuoteObj;
     this.setState({ newQuoteObj: {} });
     this.setState({
       quotes: this.state.quotes.concat(quoteToAdd)
     });
-    console.log("state after submit: ", this.state);
   };
-
-  addOpinion(opinion) {
-    if (opinion === "like") {
-      this.setState({ likes: this.state.likes + 1 });
-    } else {
-      this.setState({ dislikes: this.state.dislikes + 1 });
-    }
-  }
 
   addLike = () => {
     this.setState({ likes: this.state.likes + 1 });
@@ -214,7 +204,6 @@ class QuoteSearcher extends Component {
               key={quote._id}
               addLike={this.addLike}
               addDislike={this.addDislike}
-              addOpinion={this.addOpinion}
               removeLike={this.removeLike}
               removeDislike={this.removeDislike}
             />
